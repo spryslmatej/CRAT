@@ -1,0 +1,36 @@
+﻿<Application x:Class="crat.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:crat"
+             StartupUri="Windows/MainWindow.xaml"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background"
+                    Value="Beige" />
+
+            <Setter Property="MinHeight"
+                    Value="30" />
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="BorderThickness"
+                            Value="4" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Rectangle}"
+               x:Key="listRectangle">
+            <Setter Property="Margin"
+                    Value="0 0 5 0" />
+            <Setter Property="Width"
+                    Value="10" />
+            <Setter Property="Height"
+                    Value="10" />
+        </Style>
+
+    </Application.Resources>
+</Application>

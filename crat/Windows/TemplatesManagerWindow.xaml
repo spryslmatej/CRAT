@@ -1,0 +1,204 @@
+﻿<Window x:Class="CRAT.Windows.TemplatesManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:windows="clr-namespace:CRAT.Windows"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=windows:ITemplatesManagerViewModel}"
+        Title="Templates Manager"
+        Height="545"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="Import">
+                <MenuItem Header="Import Annotation Templates"
+                          Command="{Binding ImportAnnotationsCommand}" />
+                <MenuItem Header="Import Relation Templates"
+                          Command="{Binding ImportRelationsCommand}" />
+            </MenuItem>
+            <MenuItem Header="Export">
+                <MenuItem Header="Export Annotation Templates"
+                          Command="{Binding ExportAnnotationsCommand}" />
+                <MenuItem Header="Export Relation Templates"
+                          Command="{Binding ExportRelationsCommand}" />
+            </MenuItem>
+        </Menu>
+        <UniformGrid Grid.Row="1"
+                     Rows="1">
+            <!--    ANNOTATIONS   -->
+            <GroupBox Grid.Column="0">
+                <GroupBox.Header>
+                    <TextBlock Text="Annotation Templates"
+                               FontSize="15" />
+                </GroupBox.Header>
+
+                <DockPanel>
+                    <ListBox MinWidth="100"
+                             SelectedItem="{Binding SelectedAnnotationTemplate}"
+                             ItemsSource="{Binding StyleData.AnnotationTemplates}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Rectangle Fill="{Binding Brush}"
+                                               Style="{StaticResource listRectangle}" />
+                                    <TextBlock Text="{Binding Text}" />
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ScrollViewer>
+                        <DockPanel LastChildFill="False"
+                                   Margin="5">
+
+                            <DockPanel DockPanel.Dock="Top">
+                                <TextBlock Margin="0 0 5 0">Annotation:</TextBlock>
+                                <TextBox Text="{Binding AnnotationName}"></TextBox>
+                            </DockPanel>
+
+                            <DockPanel DockPanel.Dock="Top">
+                                <TextBlock Margin="0 0 5 0">Color:</TextBlock>
+                                <ComboBox x:Name="ComboBox_Colors"
+                                          DockPanel.Dock="Top"
+                                          SelectedItem="{Binding Color}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type windows:ColorItem}">
+                                            <StackPanel Orientation="Horizontal">
+
+                                                <Rectangle Fill="{Binding Brush}"
+                                                           Style="{StaticResource listRectangle}" />
+                                                <TextBlock Text="{Binding Name}" />
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DockPanel>
+
+                            <Button Command="{Binding AddAnnotationTemplateCommand}"
+                                    DockPanel.Dock="Top">Add</Button>
+                            <Button Command="{Binding RemoveAnnotationTemplateCommand}"
+                                    DockPanel.Dock="Top">Remove</Button>
+
+                        </DockPanel>
+
+                    </ScrollViewer>
+                </DockPanel>
+            </GroupBox>
+            <!--    /ANNOTATIONS   -->
+
+            <!--    RELATIONS   -->
+            <GroupBox Grid.Column="1">
+                <GroupBox.Header>
+                    <TextBlock Text="Relation Templates"
+                               FontSize="15" />
+                </GroupBox.Header>
+
+                <DockPanel>
+
+                    <ListBox SelectedItem="{Binding SelectedRelationTemplate}"
+                             DockPanel.Dock="Left"
+                             MinWidth="100"
+                             ItemsSource="{Binding StyleData.RelationTemplates}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Text}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ScrollViewer>
+                        <DockPanel LastChildFill="False"
+                                   DockPanel.Dock="Left"
+                                   Margin="5">
+
+                            <!-- Relation Creation -->
+                            <GroupBox DockPanel.Dock="Top">
+                                <GroupBox.Header>
+                                    <TextBlock Text="Relation Creation"
+                                               FontSize="12" />
+                                </GroupBox.Header>
+                                <DockPanel>
+                                    <DockPanel DockPanel.Dock="Top">
+                                        <TextBlock Margin="0 0 5 0">Relation:</TextBlock>
+                                        <TextBox Text="{Binding RelationName}"></TextBox>
+                                    </DockPanel>
+
+                                    <Button Command="{Binding AddRelationTemplateCommand}"
+                                            DockPanel.Dock="Top">Add</Button>
+                                    <Button Command="{Binding RemoveRelationTemplateCommand}"
+                                            DockPanel.Dock="Top">Remove</Button>
+                                </DockPanel>
+                            </GroupBox>
+
+                            <!-- Source Annotations -->
+                            <GroupBox DockPanel.Dock="Top">
+                                <GroupBox.Header>
+                                    <TextBlock Text="Source Annotations"
+                                               FontSize="12" />
+                                </GroupBox.Header>
+                                <DockPanel>
+
+                                    <ListBox MinHeight="50"
+                                             DockPanel.Dock="Top"
+                                             ItemsSource="{Binding SelectedRelationTemplate.SourceAnnotations}"
+                                             SelectedItem="{Binding SelectedSourceItem}">
+                                    </ListBox>
+
+                                    <Button Command="{Binding AddSourceItemToRelationCommand}"
+                                            DockPanel.Dock="Top">Add Source Item</Button>
+                                    <Button Command="{Binding DeleteSourceItemFromRelationCommand}"
+                                            DockPanel.Dock="Top">Delete Source Item</Button>
+                                </DockPanel>
+                            </GroupBox>
+
+                            <!-- Dest Annotations -->
+                            <GroupBox DockPanel.Dock="Top">
+                                <GroupBox.Header>
+                                    <TextBlock Text="Destination Annotations"
+                                               FontSize="12" />
+                                </GroupBox.Header>
+                                <DockPanel>
+                                    <ListBox MinHeight="50"
+                                             DockPanel.Dock="Top"
+                                             ItemsSource="{Binding SelectedRelationTemplate.DestinationAnnotations}"
+                                             SelectedItem="{Binding SelectedDestItem}">
+                                    </ListBox>
+                                    <Button Command="{Binding AddDestinationItemToRelationCommand}"
+                                            DockPanel.Dock="Top">Add Destination Item</Button>
+                                    <Button Command="{Binding DeleteDestinationItemFromRelationCommand}"
+                                            DockPanel.Dock="Top">Delete Destination Item</Button>
+                                </DockPanel>
+                            </GroupBox>
+
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="Orange"
+                                       DockPanel.Dock="Bottom">Select an item from the annotations column to start adding.</TextBlock>
+
+                        </DockPanel>
+                    </ScrollViewer>
+
+                </DockPanel>
+
+            </GroupBox>
+            <!--    /RELATIONS   -->
+        </UniformGrid>
+
+        <Button Grid.Row="2"
+                Click="Button_OK"
+                Height="40">OK</Button>
+
+    </Grid>
+</Window>

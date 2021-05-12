@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Authors>sprysmat</Authors>
+    <Company>fit.cvut.cz</Company>
+    <ApplicationIcon>ctu.ico</ApplicationIcon>
+  </PropertyGroup>
+
+</Project>

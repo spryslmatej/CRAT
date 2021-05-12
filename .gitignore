@@ -1,0 +1,7 @@
+.vs/*
+crat/obj/*
+crat/bin/*
+cratTest/obj/*
+cratTest/bin/*
+TestResults/*
+.editorconfig
